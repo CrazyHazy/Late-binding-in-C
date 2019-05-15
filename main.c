@@ -46,7 +46,7 @@ struct SubStructOne
 	size_t length_;
 };
 
- int SubStructWrite(struct BaseStruct* self, const char* message)
+int SubStructWrite(struct BaseStruct* self, const char* message)
 {
 	size_t length = strlen(message);
 
@@ -105,7 +105,6 @@ struct BaseStruct* CreateStructOne()
 	return (struct BaseStruct*)ss1;
 };
 
-
 // sub struct 2 
 struct SubStructTwo
 {
@@ -113,7 +112,6 @@ struct SubStructTwo
 	char* buf_;
 	size_t length_;
 };
-
 
 int SubStructWriteReverse(struct BaseStruct* self, const char* message)
 {
@@ -147,9 +145,6 @@ struct BaseStruct* CreateStructTwo()
 
 	return (struct BaseStruct*)ss2;
 };
-
-
-
 
 
 
