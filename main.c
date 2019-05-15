@@ -12,7 +12,7 @@ struct BSVT
 {
 	int(*Write)(struct BaseStruct* self, const char* message);
 	char*(*Read)(struct BaseStruct* self);
-	void(*DeleteStruct)(struct BaseStruct* self);
+	void(*Delete)(struct BaseStruct* self);
 };
 
 //base stctuct (something like "interface")
@@ -35,7 +35,7 @@ char* Read(struct BaseStruct* self)
 
 void Delete(struct BaseStruct* self)
 {
-	self->vt_.DeleteStruct(self);
+	self->vt_.Delete(self);
 }
 
 //sub struct 1 
@@ -98,7 +98,7 @@ struct BaseStruct* CreateStructOne()
 	struct SubStructOne* ss1 = (struct SubStructOne*)malloc(sizeof(struct SubStructOne));
 	ss1->vt_.Write = SubStructWrite;
 	ss1->vt_.Read = SubStructRead;
-	ss1->vt_.DeleteStruct = DeleteSubStruct;
+	ss1->vt_.Delete = DeleteSubStruct;
 	ss1->buf_ = NULL;
 	ss1->length_ = 0;
 
@@ -139,7 +139,7 @@ struct BaseStruct* CreateStructTwo()
 	struct SubStructTwo* ss2 = (struct SubStructTwo*)malloc(sizeof(struct SubStructTwo));
 	ss2->vt_.Write = SubStructWriteReverse; // it's the difference 
 	ss2->vt_.Read = SubStructRead;
-	ss2->vt_.DeleteStruct = DeleteSubStruct;
+	ss2->vt_.Delete = DeleteSubStruct;
 	ss2->buf_ = NULL;
 	ss2->length_ = 0;
 
