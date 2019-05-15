@@ -7,6 +7,7 @@ const unsigned MAX_BUF_SIZE = 100;
 struct BaseStruct;
 
 //base struct virtual table 
+//yes, I don't know what is "typedef" 
 struct BSVT
 {
 	int(*Write)(struct BaseStruct* self, const char* message);
