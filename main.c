@@ -163,8 +163,8 @@ int main(int argc, char **argv)
 	Write(s1, "olleH");
 	Write(s2, "olleH");
 
-	DeleteSubStruct(s1);
-	DeleteSubStruct(s2);
+	Delete(s1);
+	Delete(s2);
 
 
 	return 0;
