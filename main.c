@@ -92,6 +92,7 @@ void DeleteSubStruct(struct BaseStruct* self)
 		free(self->buf_);
 	}
 }
+
 struct BaseStruct* CreateStructOne()
 {
 	struct SubStructOne* ss1 = (struct SubStructOne*)malloc(sizeof(struct SubStructOne));
