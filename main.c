@@ -2,30 +2,28 @@
 #include<stdlib.h>
 #include <string.h>
 
-const unsigned MAX_BUF_SIZE = 100;
-
 struct BaseStruct;
 
 //base struct virtual table 
 //yes, I don't know what is "typedef" 
 struct BSVT
 {
-	int(*Write)(struct BaseStruct* self, const char* message);
+	void(*Write)(struct BaseStruct* self, const char* message);
 	char*(*Read)(struct BaseStruct* self);
 	void(*Delete)(struct BaseStruct* self);
 };
 
 //base stctuct (something like "interface")
 struct BaseStruct
-{ 
-	struct BSVT vt_;	
+{
+	struct BSVT vt_;
 	char* buf_;
 	size_t length_;
 };
 
-int Write(struct BaseStruct* self, const char* message)
+void Write(struct BaseStruct* self, const char* message)
 {
-	return self->vt_.Write(self, message);
+	self->vt_.Write(self, message);
 };
 
 char* Read(struct BaseStruct* self)
@@ -46,51 +44,27 @@ struct SubStructOne
 	size_t length_;
 };
 
-int SubStructWrite(struct BaseStruct* self, const char* message)
+void SubStructWrite(struct BaseStruct* self, const char* message)
 {
 	size_t length = strlen(message);
-
-	if (length > MAX_BUF_SIZE)
-	{
-		return -1;
-	}
-
 	self->length_ = length;
-	self->buf_ = realloc(self->buf_, sizeof(char) * self->length_);
-	
-	for (size_t i = 0; i < self->length_; i++)
-	{
-		self->buf_[i] = message[i];
-	}
-
+	self->buf_ = (char*)realloc(self->buf_, sizeof(char) * (self->length_ + 1));
+	strcpy(self->buf_, message);
 	self->buf_[self->length_] = '\0';
-	return 1;
 }
 
 char* SubStructRead(struct BaseStruct* self)
 {
-	if (self->buf_ == NULL)
-	{
-		return NULL;
-	}
-
-	char* copy = (char*)malloc(sizeof(char) * self->length_);
-
-	for (size_t i = 0; i < self->length_; i++)
-	{
-		copy[i] = self->buf_[i];
-	}
-
+	char* copy = (char*)malloc(sizeof(char) * (self->length_ + 1));
+	strcpy(copy, self->buf_);
 	copy[self->length_] = '\0';
+
 	return copy;
 }
 
 void DeleteSubStruct(struct BaseStruct* self)
 {
-	if (self->buf_ != NULL)
-	{
-		free(self->buf_);
-	}
+	free(self->buf_);
 }
 
 struct BaseStruct* CreateStructOne()
@@ -113,25 +87,13 @@ struct SubStructTwo
 	size_t length_;
 };
 
-int SubStructWriteReverse(struct BaseStruct* self, const char* message)
+void SubStructWriteReverse(struct BaseStruct* self, const char* message)
 {
 	size_t length = strlen(message);
-
-	if (length > MAX_BUF_SIZE)
-	{
-		return -1;
-	}
-
 	self->length_ = length;
-	self->buf_ = realloc(self->buf_, sizeof(char) * self->length_);
-
-	for (size_t i = 0, j = self->length_ - 1; i < self->length_; i++, j--)
-	{
-		self->buf_[i] = message[j];
-	}
-
+	self->buf_ = (char*)realloc(self->buf_, sizeof(char) * (self->length_ + 1));
+	strcpy(self->buf_, message);
 	self->buf_[self->length_] = '\0';
-	return 1;
 }
 
 struct BaseStruct* CreateStructTwo()
