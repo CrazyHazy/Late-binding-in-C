@@ -88,9 +88,13 @@ struct SubStructTwo
 
 void SubStructWriteReverse(struct BaseStruct* self, const char* message)
 {
-	self->length_ = strlen(message);
+	size_t length = strlen(message);
+	self->length_ = length;
 	self->buf_ = (char*)realloc(self->buf_, sizeof(char) * (self->length_ + 1));
-	strcpy(self->buf_, message);
+	for (unsigned i = 0, j = self->length_ - 1; i < self->length_; i++, j--)
+	{
+		self->buf_[i] = message[j];
+	}
 	self->buf_[self->length_] = '\0';
 }
 
